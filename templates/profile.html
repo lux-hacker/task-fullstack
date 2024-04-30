@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Профиль{% endblock %}
+{% block header%}
+<header>    
+    <a href="/logout"><button>Выйти</button></a>
+</header>
+{% endblock %}
+{% block main %}
+    <table>
+    <tr>
+        <th>Номер счета</th>
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Отчество</th>
+        <th>Дата рождения</th>
+        <th>ИНН</th>
+        <th>Статус</th>
+
+    </tr>
+    {% for client in clients %}
+        <tr>
+            <td>{{ client.account_number }}</td>
+            <td>{{ client.surname }}</td>
+            <td>{{ client.name }}</td>
+            <td>{{ client.middle_name }}</td>
+            <td>{{ client.birth_date }}</td>
+            <td>{{ client.inn }}</td>
+            <td>
+                {% if client.status == "Не в работе" %}
+                <select class="status_select">
+                    <option value="Не в работе" selected>Не в работе</option>
+                    <option value="В работе">В работе</option>
+                    <option value="Сделка закрыта">Сделка закрыта</option>
+                    <option value="Отказ">Отказ</option>
+                </select>
+                {% elif client.status == "В работе" %}
+                <select class="status_select">
+                    <option value="Не в работе">Не в работе</option>
+                    <option value="В работе" selected>В работе</option>
+                    <<option value="Сделка закрыта">Сделка закрыта</option>
+                    <option value="Отказ">Отказ</option>
+                </select>
+                {% elif client.status == "Сделка закрыта" %}
+                <select class="status_select">
+                    <option value="Не в работе">Не в работе</option>
+                    <option value="В работе">В работе</option>
+                    <option value="Сделка закрыта" selected>Сделка закрыта</option>
+                    <option value="Отказ">Отказ</option>
+                </select> 
+                {% elif client.status == "Отказ" %}
+                <select class="status_select">
+                    <option value="Не в работе">Не в работе</option>
+                    <option value="В работе">В работе</option>
+                    <option value="Сделка закрыта">Сделка закрыта</option>
+                    <option value="Отказ" selected>Отказ</option>
+                </select>     
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
+{% block script %}
+    <script>
+        let selectors = document.getElementsByClassName("status_select");
+        for(let i = 0; i < selectors.length; i++) {
+            selectors[i].addEventListener("change", () => {
+                $.ajax({
+                    type: "POST",
+                    url: "/profile/",
+                    data: {
+                        id_client: i,
+                        new_status: selectors[i].value,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    dataType: "json",
+                    success: function () {
+                        console.log(`${i} - ${selectors[i].value}`)
+                    }
+                })
+            })
+        }
+    </script>
+{% endblock %}

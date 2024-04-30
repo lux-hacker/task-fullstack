@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Вход{% endblock %}
+
+{% block header%}
+    <header>
+        <p style="color: darkred">{{ error_msg }}</p>
+    </header>
+{% endblock %}
+
+{% block main %}
+<main>
+    <h1>Вход</h1>
+    <form action="/login/" method="post" class="login-form">
+        {{ form.as_div }}
+        {% csrf_token %}
+        <div><button type="submit" class="submit">Войти</button></div>
+    </form>
+</main>
+{% endblock %}

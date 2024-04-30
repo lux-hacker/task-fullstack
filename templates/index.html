@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block style %} 
+    {% load static %}
+    <link href="{% static "css/index.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block header%}
+<header>    
+    <a href="/login"><button id="login">Войти</button></a>
+    <a href="/registration"><button id="reg">Зарегистрироваться</button></a>
+</header>
+{% endblock %}

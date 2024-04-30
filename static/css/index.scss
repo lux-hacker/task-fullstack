@@ -1,0 +1,31 @@
+header{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-gap: 20px;
+  justify-items: center;
+}
+
+button {
+  padding: 10px 20px;
+  font-family: Montserrat, monospace;
+  font-weight: bold;
+  font-size: large;
+  color: #eeeeee;
+  &#login {
+    background-color: #0A6600;
+    &:hover {
+      background-color: #085200;
+      cursor: pointer;
+    }
+  }
+
+  &#reg {
+    background-color: #FF4A1C;
+    &:hover {
+      background-color: #A32100;
+      cursor: pointer;
+    }
+  }
+  border: #eeeeee;
+}
